@@ -19,13 +19,16 @@ Approach
             - addUser ( contains the features and view of adding user)
             - modifyUser ( contains the features and view of update user)
   
-        - redux
-            - userStore ( Used for the creation of store)
+        - Action
             - userTypes ( contains all types of Action types that can be dispatched)
             - userAction ( contains all the action function that will be used to dispatch an action)
-            - userReducer ( handles the action on the state )
+        - Reducers
+            - index.js ( exports the combined reducers.)
+            - userReducer ( the main reducer file that handles the state and actions on the user functionalities)
   
         - app.js ( holds the root point of the application )
+  
+        - Store ( Used for the creation of store)
 
 6. Implemented the search function on all the possible fields of the list
-7. Deployed the same application on heroku , link for the same is { https://truckx-react.herokuapp.com/ }
+7. Deployed the same application on heroku, link for the same is { https://truckx-react.herokuapp.com/ }
