@@ -7,12 +7,8 @@ import { USER_REGISTER_FETCH,
     USER_LIST_FETCH,
     USER_LIST_SUCCESS,
     USER_LIST_FAILURE,
-    USER_ADD_FETCH,
     USER_ADD_SUCCESS,
-    USER_ADD_FAILURE,
-    USER_MODIFY_FETCH,
     USER_MODIFY_SUCCESS,
-    USER_MODIFY_FAILURE,
    USER_DELETE} from "./types"
 import axios from 'axios'
 
@@ -105,5 +101,13 @@ export const userModifySuccess = (userData) => (dispatch) =>  {
         .catch(err => {
             console.log(err)
         })
+    
+}
+
+export const deleteUser = (id) => (dispatch) =>  {
+            dispatch({
+                type: USER_DELETE,
+                payload: id
+            })
     
 }

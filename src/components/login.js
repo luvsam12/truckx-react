@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { userLoginSuccess } from '../actions/userActions'
+import { userLoginSuccess, userListSuccess } from '../actions/userActions'
 
 export class Login extends Component {
 
@@ -40,7 +40,7 @@ export class Login extends Component {
         .then((response) => {
             // console.log(response)
             sessionStorage.setItem('token', JSON.stringify(response.data.token))
-            // console.log(this.props)
+            this.props.userListSuccess()
             this.props.history.push('/list')
         })
         .catch((err) => {
@@ -60,6 +60,7 @@ export class Login extends Component {
             // console.log(id)
             this.props.userLoginSuccess(id)
             sessionStorage.setItem('token', JSON.stringify(response.data))
+         this.props.userListSuccess()
             this.props.history.push('/list')
         })
         .catch((err) => {
@@ -106,7 +107,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        userLoginSuccess: (users) => dispatch(userLoginSuccess(users))
+        userLoginSuccess: (users) => dispatch(userLoginSuccess(users)),
+        userListSuccess: () => dispatch(userListSuccess())
     }
 }
 

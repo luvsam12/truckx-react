@@ -1,3 +1,4 @@
+import user from "../components/user"
 import { USER_REGISTER_FETCH,
          USER_REGISTER_SUCCESS,
          USER_REGISTER_FAILURE,
@@ -106,7 +107,6 @@ export const userReducer = (state = initialState, action) => {
         case USER_MODIFY_SUCCESS:
             const newArray = state.users
             newArray.filter(now => {
-                console.log(now.id.toString(), action.payload.id.toString())
                 if(now.id.toString() === action.payload.id.toString()){
                     now.first_name = action.payload.first_name
                     now.last_name = action.payload.last_name
@@ -120,7 +120,17 @@ export const userReducer = (state = initialState, action) => {
                 loading: false,
                 users: newArray
             }
-        // 
+        case USER_DELETE:
+            let index1
+            const newArray1 = state.users.filter((now,index) => {if(now.id !== action.payload){
+                return now
+            } })
+            const new1 = state.users.splice(index1,1)
+            return {
+                ...state,
+                loading: false,
+                users: newArray1
+            }
         
         default:
              return state

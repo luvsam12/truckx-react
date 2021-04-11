@@ -33,8 +33,11 @@ import { userAddSuccess } from './../actions/userActions'
             <>
                 <form onSubmit={this.submitHandler}>
                 <input type="text" placeholder="First Name" name="first_name" value={first_name} onChange={this.changeHandler}></input>
+                <br></br>
                 <input type="text" placeholder="Last Name" name="last_name" value={last_name} onChange={this.changeHandler}></input>
+                <br></br>
                 <input type="email" placeholder="Email" name="email" value={email} onChange={this.changeHandler}></input>
+                <br></br>
                 <button type="submit">Add User</button>
                 </form>
             </>

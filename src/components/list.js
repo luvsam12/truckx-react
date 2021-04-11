@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import  UserComponent from './user'
 import { connect } from 'react-redux'
 import { userListSuccess } from './../actions/userActions'
@@ -13,26 +13,17 @@ import PropTypes from 'prop-types'
             search_result: []
          }
      }
-     //use effect
-     componentWillMount() {
-         this.props.userListSuccess()
-     }
+
+    //  componentDidMount() {
+    //      console.log('componentdidmount')
+    // this.props.userListSuccess()
+    //  }
 
      componentWillReceiveProps(nextProps){
-        //  console.log(nextProps)
         if(nextProps.newUser.id) {
-            // console.log('naman')
-            // console.log(nextProps.newUser.avtar)
             this.props.user.push(nextProps.newUser);
         }
      }
-
-     
-
-     add_user = (user) => {
-        this.state.User.push(user)
-     }
-
      clickAddUser = () => {
          this.props.history.push('/add')
      }
