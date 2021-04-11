@@ -48,6 +48,7 @@ export class modifyUser extends Component {
 
     submitHandler = (e) => {
         e.preventDefault()
+        console.log(this.state)
         this.props.userModifySuccess(this.state)
         this.props.history.push('/list')
         
@@ -61,7 +62,7 @@ export class modifyUser extends Component {
                 <form onSubmit={this.submitHandler}>
                 <input type="text" placeholder="Name" name="first_name" value={first_name} onChange={this.changeHandler}></input>
                 <br/>
-                <input type="text" placeholder="Name" name="first_name" value={last_name} onChange={this.changeHandler}></input>
+                <input type="text" placeholder="Name" name="last_name" value={last_name} onChange={this.changeHandler}></input>
                 <br></br>
                 <input type="text" placeholder="Email" name="email" value={email} onChange={this.changeHandler}></input>
                 <br/>

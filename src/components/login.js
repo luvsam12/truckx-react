@@ -40,7 +40,7 @@ export class Login extends Component {
         .then((response) => {
             // console.log(response)
             sessionStorage.setItem('token', JSON.stringify(response.data.token))
-            this.props.userListSuccess()
+            // this.props.userListSuccess()
             this.props.history.push('/list')
         })
         .catch((err) => {
@@ -60,7 +60,7 @@ export class Login extends Component {
             // console.log(id)
             this.props.userLoginSuccess(id)
             sessionStorage.setItem('token', JSON.stringify(response.data))
-         this.props.userListSuccess()
+        //  this.props.userListSuccess()
             this.props.history.push('/list')
         })
         .catch((err) => {

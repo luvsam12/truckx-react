@@ -1,4 +1,4 @@
-import user from "../components/user"
+import { act } from "react-dom/test-utils"
 import { USER_REGISTER_FETCH,
          USER_REGISTER_SUCCESS,
          USER_REGISTER_FAILURE,
@@ -13,7 +13,6 @@ import { USER_REGISTER_FETCH,
          USER_ADD_FAILURE,
          USER_MODIFY_FETCH,
          USER_MODIFY_SUCCESS,
-         USER_MODIFY_FAILURE,
         USER_DELETE} from "./../actions/types"
 
 
@@ -105,7 +104,13 @@ export const userReducer = (state = initialState, action) => {
                 loading: true
             }
         case USER_MODIFY_SUCCESS:
-            const newArray = state.users
+            // console.log(action.payload)
+            // return {
+            //     ...state.users.map((user) => (
+            //         user.id === action.payload.id ? {...state.users, first_name: action.payload.first_name, last_name: action.payload.last_name, email: action.payload.email} : user
+            //     ))
+            // }
+            let newArray = [...state.users]
             newArray.filter(now => {
                 if(now.id.toString() === action.payload.id.toString()){
                     now.first_name = action.payload.first_name
@@ -115,17 +120,16 @@ export const userReducer = (state = initialState, action) => {
                 return now
             })
             console.log(newArray)
+            console.log("hello")
             return {
                 ...state,
                 loading: false,
                 users: newArray
             }
         case USER_DELETE:
-            let index1
-            const newArray1 = state.users.filter((now,index) => {if(now.id !== action.payload){
+            const newArray1 = [...state.users].filter((now,index) => {if(now.id !== action.payload){
                 return now
             } })
-            const new1 = state.users.splice(index1,1)
             return {
                 ...state,
                 loading: false,

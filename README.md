@@ -1,9 +1,12 @@
 React Assignment 
 
-Tasks: 
+Tasks completed: 
 ● Authenticate the user on the login screen.
 ● Create a grid to list users available via https://reqres.in/api/users API call.
 ● Provide buttons to edit user information, delete, add a new user and search.
+
+Tasks pending:
+● Adding unit test cases
 
 Approach
 1. Used the given mock API endpoint for backend connections.

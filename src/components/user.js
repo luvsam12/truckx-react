@@ -22,7 +22,7 @@ import { deleteUser} from './../actions/userActions'
     render() {
         return (
             <tr>
-                <td>{`${this.props.user.first_name} ${this.props.user.last_name}` }</td>
+                <td>{this.props.user.first_name + " " + this.props.user.last_name} </td>
                 <td>{this.props.user.email}</td>
                 <td><img src={this.props.user.avatar} alt="user avatar"></img></td>
                 <td >

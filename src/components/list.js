@@ -14,13 +14,19 @@ import PropTypes from 'prop-types'
          }
      }
 
-    //  componentDidMount() {
-    //      console.log('componentdidmount')
-    // this.props.userListSuccess()
-    //  }
+     componentDidMount() {
+        //  console.log('componentdidmount')
+        if(this.props.user.length === 0){
+            this.props.userListSuccess()
+        }
+     }
+     shouldComponentUpdate(){
+         return true
+     }
 
      componentWillReceiveProps(nextProps){
-        if(nextProps.newUser.id) {
+         console.log(nextProps)
+        if(nextProps?.newUser?.id) {
             this.props.user.push(nextProps.newUser);
         }
      }
@@ -43,11 +49,14 @@ import PropTypes from 'prop-types'
         const searchList = search.map((current,index) => <UserComponent key={current.id} user={current} history={this.props.history}></UserComponent>)
         return (
             <div style={{textAlign:"center"}}>
-                <input type="text" placeholder="Search" name='search_user' value={search_user} onChange={this.onChangeSearchHandler} ></input>
+                <input type="text" placeholder="Search" name='search_user' value={search_user} onChange={this.onChangeSearchHandler} style={{width:"70%", height:'30px', marginTop:'10px'}}></input>
                 <br />
                 <button onClick={this.clickAddUser} style={{float:'right'}}>Add user</button>
                 <br />
-                List of posts
+                <br />
+                <br />
+                <br />
+
                 <div style={{marginLeft:'30%'}}>
                 <table>
                     <tbody>
@@ -72,9 +81,11 @@ import PropTypes from 'prop-types'
     newUser: PropTypes.object
  }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
      user: state.user.users,
      newUser: state.user.newUser
-    })
+    }}
 
 export default connect( mapStateToProps, { userListSuccess })(list)
