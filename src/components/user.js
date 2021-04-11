@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import modifyUser from './modifyUser'
 import { connect } from 'react-redux'
 import { deleteUser} from './../actions/userActions'
  class UserComponent extends Component {

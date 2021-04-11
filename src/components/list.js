@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react'
+import React, { Component } from 'react'
 import  UserComponent from './user'
 import { connect } from 'react-redux'
 import { userListSuccess } from './../actions/userActions'

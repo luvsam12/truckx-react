@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { userListSuccess } from './../actions/userActions'
 import PropTypes from 'prop-types'
 import { userAddSuccess } from './../actions/userActions'
  class AddUser extends Component {
