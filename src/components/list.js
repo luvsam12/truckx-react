@@ -1,35 +1,33 @@
 import React, { Component } from 'react'
-import axios from 'axios'
-import User from './user'
-// import { connect } from 'react-redux'
-// import { userListFetch,
-//         userListSuccess,
-//         userListFailure
-//        } from './../redux/cake/userAction'
+import  UserComponent from './user'
+import { connect } from 'react-redux'
+import { userListSuccess } from './../actions/userActions'
+import PropTypes from 'prop-types'
 
  class list extends Component {
      constructor(props) {
          super(props)
      
          this.state = {
-            user: [],
-            err: '',
             search_user: '',
             search_result: []
          }
      }
      //use effect
-     componentDidMount() {
-         axios.get('https://reqres.in/api/users')
-         .then(response => {
-             console.log(response.data.data)
-             this.setState({user: response.data.data})
-         })
-         .catch(err => {
-             console.log(err)
-             this.setState({error: err})
-         })
+     componentWillMount() {
+         this.props.userListSuccess()
      }
+
+     componentWillReceiveProps(nextProps){
+        //  console.log(nextProps)
+        if(nextProps.newUser.id) {
+            // console.log('naman')
+            // console.log(nextProps.newUser.avtar)
+            this.props.user.push(nextProps.newUser);
+        }
+     }
+
+     
 
      add_user = (user) => {
         this.state.User.push(user)
@@ -37,8 +35,6 @@ import User from './user'
 
      clickAddUser = () => {
          this.props.history.push('/add')
-        // console.log("hello")
-        // this.props.history.push('/add')
      }
 
      onChangeSearchHandler = (e) => {
@@ -48,13 +44,12 @@ import User from './user'
      }
 
     render() {
-        const { user, search_user, search_result } = this.state
-        const userList = user.map((current, index) => <User key={current.id} user={current} history={this.props.history}></User>)
-        const search = user.filter(now => {
-           return now.first_name.toLowerCase().includes(this.state.search_user) || now.last_name.toLowerCase().includes(this.state.search_user) || now.email.toLowerCase().includes(this.state.search_user)
+        const { search_user, search_result } = this.state
+        const userList = this.props.user.map((current, index) => <UserComponent  user={current} history={this.props.history}></UserComponent>)
+        const search = this.props.user.filter(now => {
+           return now.first_name.toLowerCase().includes(search_user) || now.last_name.toLowerCase().includes(search_user) || now.email.toLowerCase().includes(search_user)
         })
-        const searchList = search.map((current,index) => <User ket={current.id} user={current} history={this.props.history}></User>)
-        // console.log(search_user)
+        const searchList = search.map((current,index) => <UserComponent key={current.id} user={current} history={this.props.history}></UserComponent>)
         return (
             <div style={{textAlign:"center"}}>
                 <input type="text" placeholder="Search" name='search_user' value={search_user} onChange={this.onChangeSearchHandler} ></input>
@@ -80,62 +75,15 @@ import User from './user'
     }
 }
 
+ list.propTypes = {
+    userListSuccess: PropTypes.func.isRequired,
+    user: PropTypes.array.isRequired,
+    newUser: PropTypes.object
+ }
 
-export default list
+const mapStateToProps = (state) => ({
+     user: state.user.users,
+     newUser: state.user.newUser
+    })
 
-// const mapStateToProps = (state) => {
-//     return {
-//         user: state.user
-//     }
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         userListSuccess: () => dispatch(userListSuccess())
-//     }
-// }
-
-
-
-
-// export default connect(mapStateToProps, mapDispatchToProps)(list)
-
-
-
-// import React from 'react'
-// import { connect } from 'react-redux'
-// import { userListFetch,
-//     userListSuccess,
-//     userListFailure
-//    } from './../redux/cake/userAction'
-// import { buyCake } from '../redux/cake/index'
-
-
-// function list(props) {
-//     console.log(props)
-//     return (
-//         <div>
-//             <h1>Loading - {props.loading ? "TRUE" : "FALSE "}</h1>
-//             <button onClick={props.userListFetch}>But Cakes</button>
-//         </div>
-//     )
-// }
-
-// const mapStateToProps = (state) => {
-//     return {
-//         loading: state.loading
-//     }
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         userListFetch: () => {
-//             // console.log('naman')
-//             dispatch(userListFetch())}
-//     }
-// }
-
-
-
-
-// export default connect(mapStateToProps, mapDispatchToProps)(list)
+export default connect( mapStateToProps, { userListSuccess })(list)

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-// import { useParams } from "react-router";
+import { connect } from 'react-redux'
+import { userModifySuccess } from '../actions/userActions'
+import propTypes from 'prop-types'
 
 
 export class modifyUser extends Component {
@@ -8,11 +10,17 @@ export class modifyUser extends Component {
         super(props)
     
         this.state = {
-             name: '',
+             first_name: '',
+             last_name: '',
              email:'',
              avatar: '',
              id: ''
         }
+    }
+
+    static propTypes = {
+        user: propTypes.array.isRequired,
+
     }
 
     componentDidMount(){
@@ -22,9 +30,9 @@ export class modifyUser extends Component {
            })
         axios.get(`https://reqres.in/api/users/${id}`)
         .then((res) => {
-            console.log(res)
             this.setState({
-                name: res.data.data.first_name + " " + res.data.data.last_name,
+                first_name: res.data.data.first_name,
+                last_name: res.data.data.last_name,
                 email: res.data.data.email,
                 avatar: res.data.data.avatar
             })
@@ -32,7 +40,6 @@ export class modifyUser extends Component {
         .catch((err) => {
             console.log(err)
         })
-        // console.log(this.state)
     }
     
     changeHandler = (e) => {
@@ -41,25 +48,21 @@ export class modifyUser extends Component {
 
     submitHandler = (e) => {
         e.preventDefault()
-        console.log(this.state)
-        axios.put(`https://reqres.in/api/users${this.state.id}`, this.state)
-        .then(response => {
-            console.log(response)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        this.props.userModifySuccess(this.state)
+        this.props.history.push('/list')
+        
     }
 
 
     render() {
-        console.log(this.state)
-        const { name, email } = this.state
+        const { first_name, last_name,  email } = this.state
         return (
             <>
                 <form onSubmit={this.submitHandler}>
-                <input type="text" placeholder="Name" name="name" value={name} onChange={this.changeHandler}></input>
+                <input type="text" placeholder="Name" name="first_name" value={first_name} onChange={this.changeHandler}></input>
                 <br/>
+                <input type="text" placeholder="Name" name="first_name" value={last_name} onChange={this.changeHandler}></input>
+                <br></br>
                 <input type="text" placeholder="Email" name="email" value={email} onChange={this.changeHandler}></input>
                 <br/>
                 <button type="submit">Update User</button>
@@ -69,19 +72,10 @@ export class modifyUser extends Component {
     }
 }
 
-export default modifyUser
+const mapStateToProps = (state) => {
+    return {
+        user: state.user.users
+    }
+}
 
-
-// import React from 'react'
-// 
-// let ModifyUser = () => {
-//     return ( 
-        // <div>
-        //     <input type="text" placeholder="Name"></input>
-        //     <input type="text" placeholder="Job"></input>
-        //     <button>Register</button>
-        // </div>
-//     )
-// }
-
-// export default ModifyUser;
+export default connect(mapStateToProps, { userModifySuccess })(modifyUser)

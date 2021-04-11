@@ -1,21 +1,6 @@
-// import React from 'react'
-
-// function User({user}) {
-//     return (
-//             <tr>
-//                 <td>{`${user.first_name} ${user.last_name}` }</td>
-//                 <td>{user.email}</td>
-//                 <td><img src={user.avatar} alt="user avatar"></img></td>
-//                 <td onClick={}>edit</td>
-//             </tr>
-//     )
-// }
-
-// export default User;
-
 import React, { Component } from 'react'
 import modifyUser from './modifyUser'
-export class user extends Component {
+ class UserComponent extends Component {
 
     constructor(props) {
         super(props)
@@ -42,5 +27,5 @@ export class user extends Component {
     }
 }
 
-export default user
+export default UserComponent
 

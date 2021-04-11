@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import axios from 'axios'
-
+import { connect } from 'react-redux'
+import { userListSuccess } from './../actions/userActions'
+import PropTypes from 'prop-types'
+import { userAddSuccess } from './../actions/userActions'
  class AddUser extends Component {
     constructor(props) {
         super(props)
@@ -9,7 +11,8 @@ import axios from 'axios'
              first_name: '',
              last_name: '',
              email:'',
-             avtar:'https://reqres.in/img/faces/1-image.jpg'
+             avatar:'https://reqres.in/img/faces/1-image.jpg',
+             id: this.props.user.id
         }
     }
     
@@ -19,16 +22,8 @@ import axios from 'axios'
 
     submitHandler = (e) => {
         e.preventDefault()
-        console.log(this.state)
-        axios.post('https://reqres.in/api/users', this.state)
-        .then(response => {
-            console.log(response)
-            console.log(this.props)
-            this.props.myClickHandler(response.data)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        this.props.userAddSuccess(this.state)
+            this.props.history.push('/list')
     }
 
 
@@ -47,4 +42,14 @@ import axios from 'axios'
     }
 }
 
-export default AddUser
+AddUser.propTypes = {
+    userAddSuccess: PropTypes.func.isRequired
+}
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user.newUser
+    }
+}
+
+export default connect(mapStateToProps,{ userAddSuccess })(AddUser)
